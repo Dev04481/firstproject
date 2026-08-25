@@ -1,0 +1,1 @@
+console.log("Job Portal Javascript is connected.");
