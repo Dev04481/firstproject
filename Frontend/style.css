@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial, sans-serif;
+    background: #000000;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: rgb(122, 2, 2);
+}
+header h1{
+    font-size: 30px;
+}
+nav a{
+    text-decoration: none;
+    margin-left: 25px;
+    color: #333;
+}
+.hero{
+    text-align: center;
+    padding: 100px 20px;
+}
+.hero h2{
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+.hero p{
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+.hero input{
+    width: 400px;
+    padding: 15px;
+    border: 1px solid #ccc;
+}
+.hero button{
+    padding: 15px 25px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
