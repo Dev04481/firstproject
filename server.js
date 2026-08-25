@@ -1,7 +1,12 @@
 const express=require("express");
+const path=require("path");
 const app =express();
+
+app.use(express.static(path.join(__dirname,"Frontend")));
+
+
 app.get("/",(req,res)=>{
-    res.send("Welcome to Job connect🚀.")
+    res.sendFile(path.join(__dirname,"Frontend","index.html"));
 })
 app.listen(3000,()=>{
     console.log("Server is running on port 3000.")
