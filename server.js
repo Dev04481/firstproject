@@ -58,7 +58,8 @@ app.get("/api/jobs/:id",(req,res)=>{
             location:"Noida",
             type:"Full time",
             salary:"7-10LPA",
-            skills:["HTML","CSS","JAVASCRIPT","Node.js","Express","MongoDB"]
+            skills:["HTML","CSS","JAVASCRIPT","Node.js","Express","MongoDB"],
+            requirements:["Btech graduate","10th pass","65% above percentage"]
         }
     ];
     const jobId=Number(req.params.id);
