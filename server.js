@@ -1,7 +1,8 @@
 require("dotenv").config();
-const mongoose=require("mongoose");
 
 const express=require("express");
+const mongoose=require("mongoose");
+const Job=require("./models/job")
 const path=require("path");
 const app =express();
 
@@ -19,68 +20,44 @@ mongoose.connect(process.env.MONGO_URI)
 app.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname,"Frontend","index.html"));
 })
-
-app.get("/api/jobs",(req,res)=>{
-    const jobs=[
-        {
-            id:1,
-            title:"Frontend Developer",
-            company:"Tech solution",
-            location:"Delhi",
-            type:"Full time",
-            salary:"5-8LPA",
-            skills:["HTML,CSS,JAVASCRIPT"]
-        },
-        {
-            id:2,
-            title:"Backend Developer",
-            company:"CodeLabs",
-            location:"Pune",
-            type:"Full time",
-            salary:"5-10LPA",
-            skills:["HTML","CSS","JAVASCRIPT","Node.js","Express","MongoDB"]
-        },
-        {
-            id:3,
-            title:"Full Stack Developer",
-            company:"Webworks",
-            location:"Noida",
-            type:"Full time",
-            salary:"7-10LPA",
-            skills:["HTML","CSS","JAVASCRIPT","Node.js","Express","MongoDB"]
-        }
-    ];
+app.get("/api/jobs",async(req,res)=>{
+    try{ 
+    const jobs =await Job.find();
     res.json(jobs);
+    }
+    catch(error){
+        console.error("Error fetching jobs:",error);
+        res.status(500).json({message: "Faileb to fetch jobs."})
+    }
+})
+app.post("/api/jobs", async(req,res)=>{
+    try{
+        const jobs = new Job(req.body);
+        const savedJob=await job.save();
+
+        res.status(201).json(savedJob);
+    }
+    catch(error){
+        console.error("error fetching jobs:",error);
+        req.status(500).json({message:"Failed to fetch bs"});
+    }
 });
-app.get("/api/jobs/:id",(req,res)=>{
-    const jobs=[
-        {   id:1,
-            title:"Frontend Developer",
-            company:"Tech solution",
-            location:"Delhi",
-            type:"Full time",
-            salary:"5-8LPA",
-            skills:["HTML,CSS,JAVASCRIPT"]
-        },
-        {
-            id:3,
-            title:"Full Stack Developer",
-            company:"Webworks",
-            location:"Noida",
-            type:"Full time",
-            salary:"7-10LPA",
-            skills:["HTML","CSS","JAVASCRIPT","Node.js","Express","MongoDB"],
-            requirements:["Btech graduate","10th pass","65% above percentage"]
-        }
-    ];
-    const jobId=Number(req.params.id);
-    const job=jobs.find(job=>job.id===jobId);
+app.get("/api/jobs/:id",async(req,res)=>{
+    try{
+        const job = await Job.findById(req.params.id);
     if(!job){
         return res.status(404).json({
-            message:"Jb not found"
+            message:"Job not found"
         });
     }
+    
     res.json(job);
+}catch(error){
+        console.error("Error fetching job:",error);
+        res.status(500).json({
+            message:"Failed to fetch job"
+        });
+    }
 });
 
 app.listen(3000,()=>{
