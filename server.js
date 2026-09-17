@@ -1,8 +1,19 @@
+require("dotenv").config();
+const mongoose=require("mongoose");
+
 const express=require("express");
 const path=require("path");
 const app =express();
 
 app.use(express.static(path.join(__dirname,"Frontend")));
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(()=>{
+        console.log("MongoDB connected successfully");
+    })
+    .catch((error)=>{
+        console.error("MongoDB connection failed:",error);
+    });
 
 
 app.get("/",(req,res)=>{
