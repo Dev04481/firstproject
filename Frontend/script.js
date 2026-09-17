@@ -1,6 +1,7 @@
 console.log("Job Portal Javascript is connected.");
 
 function viewJob(jobId){
+    console.log("Clicked Job ID:",jobId)
     window.location.href=
     `job-details.html?id=${jobId}`;
 }
@@ -90,7 +91,7 @@ async function getjobs() {
 
 
                 <button class="view-job"
-                onclick="viewJob(${job.id})">
+                onclick="viewJob('${job._id}')">
 
                     View Job
 
@@ -118,6 +119,7 @@ async function getJobDetails() {
     const jobDetails =
         document.getElementById("jobDetails");
 
+        console.log("jobDetails element:",jobDetails);
 
     // If we are not on job-details.html
     if (!jobDetails) {
@@ -125,13 +127,20 @@ async function getJobDetails() {
     }
 
     // Get job ID from URL
+    console.log("Full URL:",window.location.href);
+    console.log("search part:",window.Location.search);
     const params =
         new URLSearchParams(
             window.location.search
         );
+    console.log("Params:",params);
 
     const jobId =
         params.get("id");
+        console.log("Job id from URL:",jobId);
+    
+
+    
 
     // Check if ID exists
     if (!jobId) {
@@ -158,9 +167,11 @@ async function getJobDetails() {
     try {
 
         // Call API
+        console.log("FETCHING job:",`/api/jobs/${jobId}`);
         const response =
             await fetch(`/api/jobs/${jobId}`);
-
+        console.log("Response status:",response.status);
+        console.log("response ok:",response.ok);
         // Check API response
         if (!response.ok) {
 
